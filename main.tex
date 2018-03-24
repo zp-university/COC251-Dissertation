@@ -1,12 +1,35 @@
-\documentclass[10pt, a4paper]{article}
-\usepackage[margin=1in]{geometry}
-\usepackage[pdftex,dvipsnames]{xcolor}  % Coloured text etc
-\usepackage{fancyhdr}
+% Going off the Thesis guidelines available here: http://www.lboro.ac.uk/students/welcome/research/codes-of-practice/appendices/
+% A4 paper size selected, default is 11pt font, to change to 12pt use [a4paper, 12pt] as option to documentclass
+\documentclass[a4paper]{report}
+
+% Some useful packages for including images, colored font, etc.
+\usepackage[dvips]{graphicx}
+\usepackage{listings}
+\usepackage{url}
+\usepackage[pdftex,dvipsnames]{xcolor}
 \usepackage{graphicx}
 \usepackage{pgfgantt}
-\usepackage{natbib}
 
-\usepackage{xargs}                      % Use more than one optional parameter in a new commands.
+%Bibliography Setup
+\usepackage{natbib}
+\bibliographystyle{agsm}
+
+% Set margins in all document to 3.5cm as per guidelines for binding
+\usepackage[includeheadfoot,margin=3.5cm]{geometry}
+
+% Used to including pdf files within pages
+% use [draft] as option to output empty spaces rather than rendering all pages (useful when including lots of pdfs)
+\usepackage{pdfpages}
+
+% Used to produce headers and footers
+\usepackage{fancyhdr}
+\pagestyle{fancyplain}
+
+% Used for removing title in bibliography sections
+\usepackage{titlesec}
+
+%Todo commands
+\usepackage{xargs}
 \usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
 \newcommandx{\unsure}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
 \newcommandx{\change}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
@@ -14,183 +37,50 @@
 \newcommandx{\improvement}[2][1=]{\todo[linecolor=Plum,backgroundcolor=Plum!25,bordercolor=Plum,#1]{#2}}
 \newcommandx{\thiswillnotshow}[2][1=]{\todo[disable,#1]{#2}}
 
-\pagestyle{fancy}
-\lhead{Final Year Project Brief}
-\chead{Secure Smart Lock System}
-\rhead{Zack Pollard}
-\fancyfoot{}
-\cfoot{\thepage}
-\setlength{\headheight}{25pt}
-\renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\footrulewidth}{0.4pt}
+% To have a separate bibliography per Chapter uncomment this line
+
+% See Introduction/Introduction.tex for example how to include the bibliography
+%\usepackage{chapterbib}
+
+% Line spacing defined at 1 and a half. I know it says 1.3 but its 1 and a half.
+\linespread{1.3}
+
+% Setup headers and footers
+\fancyhf{}
+\lhead{\leftmark}
+% Page number placed on right side on odd pages and left side on even pages
+\fancyfoot[RO, LE] {\thepage}
+
+
 \begin{document}
 
-\title{Final Year Project Dissertation - Secure Smart Lock System}
-\author{Secure Smart Lock System}
-\maketitle
+% Give \subsubsection numbers
+\setcounter{secnumdepth}{4}
 
-\section{The Problem}
-With smart devices being created left right and centre nowadays with very little care towards security, it is going to become more common that houses are being hacked with devices slowly controlling more and more sensitive areas of the home. An example of this would be the August lock, an idea similar to what I am trying to achieve here, however the device has multiple security flaws that were found and outlined at the security conference Defcon. This is far from the first smart home device that was found to have security issues, there have been hundreds of different WiFi Security cameras that connect themselves to the web with little care towards the security of that device which has the capability of letting someone spy on your home. Not to long ago, there was a huge attack that brought down DynDNS, and therefore all the sites that used it which included Twitter, Spotify and Reddit. This attack was using the internet connections of innocent people who happened to have insecure smart home devices in their homes. Millions of smart home devices were involved in the attack as they were hacked due to their inadequate or sometimes non-existent security.
-\newline
-\newline
-I want to create a product unlike these other smart home devices, one that is secure enough that I would be happy to put it in my own home. At the end of the day, a camera being infected doesn't matter so much, but a system that unlocks your house needs to be bulletproof on the security front. Looking at the implementation of the August lock, it just isn't something that I would be willing to use to secure my house, yet thousands, maybe more unknowing customers have purchased the august lock and use it to secure their homes every day. I want to create something that is easy to use, and secure, something that most companies seem to have trouble with nowadays.
+% Title, Author, Abstract, Acknowledgement, Table of Content, List of Figures and List of Tables
+\include{Front/front}
 
-\section{Aim of the Project - Technical}
-The project objective is to create a smart lock system that would be able to automate the unlocking and locking of a house's front door. The system will be comprised of multiple Raspberry Pi's with sensors connected to them to retrieve data from a variety of sources to determine whether the door should be locked or unlocked. The system will use RESTful APIs so that it can be easily extended to more devices in the future, and will ensure that all communication between devices is done so in a fully encrypted and secure manner. An example of some authentication methods that the system may use would be fingerprint, RFID/NFC, Facial Recognition, etc.
-\newline
-\newline
-Security is key as this will be securing a home. It is imperative that all communication is done securely, and that the system is certain that the user is who they say they are before they let them into the house. I will be conducting research into the best and most accessible security methods that could be used for this project for the initial implementation and demonstration. The idea however, is that the system will be built in such a way that anyone could create a device for this system using the RESTful APIs that will be available from the core control centre in the house.
+% Introduction
+\include{Chapters/Introduction/introduction}
 
-\section{Aim of the Project - For the User}
-So security is all well and good, but the product must still be easy to use for the user. At the end of the day, a lot of users don't care about how secure a product is, and will trust that the company has put in the correct security measures. This reason alone is why there are so many unsecured smart devices out in the wild as your average person doesn't have the technical knowledge to ensure that the product is secure. The companies that make these products know this and so don't actually implement robust security, something that, in my opinion, should be regulated more closely. This product should make the users lives easier whilst still maintaining the security of any normal key based locking system.
-\newline
-\newline
-A simple run down of what I would want from this lock for the user would be the following. They walk up to their home after having setup their system, and all they need to do to get in is tap their phone on the NFC pad in order to unlock the door, and have it lock itself again after they have entered the house, probably on a timer of some sorts. If the door fails to lock for any reason, the user should be notified (another issue with the august lock, if it fails to lock, it simply reports the door as locked, even if it isn't).
+% Literature Review
+\include{Chapters/Literature_Review/literature_review}
 
-\cite{Lackner2013}
+% Software Development Project
+\include{Chapters/Software_Development_Project/software_development_project}
 
-\section{Project Objectives}
-\begin{itemize}
-	\item Design a Database Schema that can be used to store all the users data and settings efficiently
-	\item Develop a core application for the house that will control the main system functions
-	\item Develop a REST API for the core application that other systems (i.e. authentication systems) can talk to
-	\item Implement a minimum of two authentication methods that can be used to unlock the door
-	\item Develop a server system that can be used for the core to sync with and for the user to communicate with the system when outside of the home
-	\item Develop a minimal Android application that the user can use to setup and manage their system
-	\item Ensure that the security of the product is solid and that all communication is secured with TLS 1.2
-\end{itemize}
+% Conclusion
+\include{Chapters/Conclusion/conclusion}
 
-\section{Risk Management}
-For a project such as this, there is obviously a large amount of risk involved if for some reason the system isn't secured correctly. My plan is to limit these risks as much as possible by ensuring that all communication is using enforced TLS 1.2 as well as not running the system on an actual door until I have a working system that I have run penetration testing on. Replay attacks were something that I had to consider, but these are averted by using TLS 1.2, as it has protection against that built in using the MAC secret and the sequence number. When running this system on a real door, there will be much larger risk involved as it is obviously securing a real house, however as long as all the proper testing is done before it gets installed on a real door, then that should eliminate the risk involved. Obviously, if this gets installed on any door, then it will be in my own house, so I will ensure that the system is functioning properly before installation and any updates are fully tested before being installed on the live system.
-
-\newpage
-\section{Project Plan}
-\begin{center}
-	\includegraphics[angle=90,width=\textwidth,height=\textheight,keepaspectratio]{"../Project Plan/FYP-Project-Plan"}
-\end{center}
-
-\newpage
-\section{Block Diagram}
-\begin{center}
-	\includegraphics[angle=90,width=\textwidth,height=\textheight,keepaspectratio]{"../Block Diagram/FYP-Block-Diagram"}
-\end{center}
-
-\newpage
-\section{Sequence Diagrams}
-\subsection*{Initial Core Raspberry Pi Setup}
-\begin{center}
-	\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{"../Sequence Diagrams/Initial Core RPi Setup"}
-\end{center}
-
-\newpage
-\subsection{New Device Pairing to Existing Network}
-\begin{center}
-	\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{"../Sequence Diagrams/New Device Pairing to Network"}
-\end{center}
-
-\newpage
-\section{Literature Review}
-\subsection{Aim}
-Investigate different aspects of a secure smart lock system to see where potential security issues could be and how to avoid or counteract them
-\subsection{Objectives}
-\begin{itemize}
-	\item {Evaluate different areas of the Secure Smart Lock System}
-	\item Investigate methods of ensuring the security of the system
-	\item Investigate ways to avoid potential security risks imposed by necessary parts of the system
-	\item Ensure that security doesn't make the system considerably more difficult for the user to setup, use day-to-day or manage
-\end{itemize}
-
-\subsection{Current Smart Locks}
-Smarts locks and internet of things (IoT) devices, in general, have increased massively in availability and use over the last couple of years and according to \cite{Buhov2016}, there will be 50 billion devices connected to the internet by 2020. Having these devices in and around your home constantly connected to the internet introduces some risk if they are not properly secured. This risk is exaggerated if they are devices that secure your home such as a smart lock.
-\\
-\indent\cite{Ho2016} compare 5 commonly available smart locks that are on the market right now. These locks operated in three different ways: touch-to-unlock, mobile app unlocking, and automatic unlocking. For my purposes, I am mostly interested in the mobile app unlocking as it will be the main way to unlock the Secure Smart Lock System. All the smart locks except for the Lockitron connect to the internet through a Bluetooth connection to the phone, rather than connecting directly, this is interesting as my system will only use Wi-Fi, and will only communicate directly with the phone if they are on the same Wi-Fi network.  The study concluded that all the smart locks except for the Lockitron were vulnerable to the attacks that they undertook, this was down to the Lockitron using Wi-Fi directly and therefore being able to verify with the server for the most up-to-date access control lists. They continue to explain that direct connections, while good, do mean that the device must include a Wi-Fi module which increases power usage on the device and so battery-only operation isn't feasible. A good point they make about the Lockitron is that it doesn't maintain its own access control list locally, so in the event of their servers being unavailable, the lock will not function. This is something I plan to avoid in my lock by maintaining a local access control list, however, due to the attacks mentioned in the study, I will ensure that any changes to the access control list are passed onto the lock before the user is told they are saved.
-\\
-\indent\cite{Ye2017} did a study specifically on the security of the August Smart Lock. This study focussed on more specific attacks such as moving the owner account from one phone to another and taking control of it. All of the attacks that they performed required root access to the Android device in order to perform, which is unreasonable to assume you will be able to get without taking the users device and knowing their unlock code to perform the rooting process. This is further shown by \cite{Fuller2017} who also tried to penetrate the August Lock but without using rooting as their main point of entry. The attacks that \cite{Ye2017} performed certainly aren't ideal, but rooting compromises the integrity of the device and exposes all the data on the device including encryption keys, app data and anything else the device has stored. As shown by \cite{Fuller2017} the August Lock has had a lot of past security issues, however, they have been fixed by the development team since then.
-
-\subsection{Certificate Pinning}
-Certificate pinning is one of many ways to ensure you are talking to the server you think you are. If you end up doing this badly, however, you can decrease the security of your app. A study performed by \cite{Buhov2016} does an evaluation of 25,000 android apps on the play store to see how many of them implement security properly. It turns out that only 21\% of applications have no issues, with 36\% having a broken implementation of either the Trust Manager or the Hostname Verifier. This issue is brought about by people using self-signed certificates or pinning certificates and trying to, therefore, implement their own version of the Trust Manager and/or Hostname Verifier but doing so incorrectly. As pointed out by the study, many of the incorrect implementations of the Trust Manager lead to the app accepting any certificate it was given, therefore breaking the chain of trust that is usually in place on the device. \cite{Tendulkar2014} back this up showing that out of the apps they tested, only 43\% use SSL verification correctly with the remaining apps either accept all certificates or accept all hostnames. An even more interesting fact that they discovered was that 53\% of the apps they tested implement this custom code to allow all certificates or all hostnames even though they are using valid and signed certificates. The inclusion of this incorrect code allows for man-in-the-middle attacks which would compromise the security of user data being transferred over the network.
-\\
-\indent\cite{Buhov2016} mentions the different security you get from different levels of certificate pinning. You can pin the end (leaf) certificate which tells you with absolute certainty that you are connecting to the server you think you are. One downside of this is that you must make updates to your app frequently as most certificates only have a lifetime of a year. This problem is made even worse with LetsEncrypt who's certificates expire after a maximum of 3 months. The study explains other solutions for certificate pinning including intermediate and root certificate pinning. Intermediate certificate pinning is less secure than leaf certificate pinning, however, as long as you trust the Certificate Authority (CA) you are using to not sign a certificate for your domain erroneously, then it is just as secure. The major benefit of intermediate certificate pinning is that they update a lot less frequently, the current LetsEncrypt certificate doesn't expire until the year 2021. The last option of root certificate pinning is a lot less secure as you are trusting a lot more parties as potentially multiple CA's will use the same root certificate for signing their SSL certificates.
-\\
-\indent The studies show me that certificate pinning is overall a good idea, however, it must be implemented correctly. Based off of the tests that were performed by these studies I will ensure that my app only accepts certificates signed by the LetsEncrypt intermediate certificate and that my app ensures the hostname on the certificate matches the hostname on the certificate. If either of these tests fail then it means I have implemented the security incorrectly and as these studies have shown that would make my app vulnerable to MITM attacks which would severely impact the security of my smart lock system.
-
-\subsection{Avoiding NFC Relay Attacks}
-During my research it became apparent to me that NFC has no way of verifying that the device it is communicating with is actually right next to it, making it subject to relay attacks \citep{Francis2010}. This study explains the relay attack as the ability to send the NFC communication over a separate communication channel using other phones as the proxy. This introduces problems if the app is always able to receive NFC communication and unlock the door, as an attacker could then unlock the door by having someone by the door NFC reader and also by a person with permission to unlock the door and just send the data between the two attackers. \cite{Oh2015} suggests distance bounding as a potential solution to this issue as communicating between the proxy devices will add a delay that would normally not be present in the system. The NFC reader should be able to determine the distance between the NFC device and the reader by determining the latency in sending and receiving data. The study points out that this kind of verification can vary massively in latency and therefore you may sometimes end up rejecting legitimate users if their device doesn't respond quickly enough. Two-factor Authentication is another solution that the study suggests and is a much more reliable solution as you can request that as well as the NFC card a user must input a pin, provide a fingerprint or enter a password. Another suggestion they make to directly counter relay attacks is to emit a jamming signal around the reader so that the device can't communicate externally via 3G, 4G, Wi-Fi or Bluetooth. Whilst this is an interesting solution, there are many situations where this would be impractical or illegal to implement a jammer in an NFC enabled device.
-\\
-\indent\cite{Francis2010} shows how trivial it is to relay NFC data across a Bluetooth connection even on old devices. This study shows that another potential attack mitigation strategy would be to include the location in the NFC transaction as the attacks can only relay the data, not modify it. If this was done the reader could check that the location was within the expected range to be considered near the reader. The issue with this strategy is that the location is not always accurate, getting accurate location through GPS takes time and may not be possible if the reader is undercover.
-\\
-\indent Using NFC for my project will require investigation into the methods specified above to prevent relay attacks. This has certainly opened up a lot of potential work for me to ensure that the smart lock is easy to use but also secure from relay attacks. I'll be looking into how effective the distance bounding is, but if that proves ineffective or unreliable I will make it so the device has to be unlocked in order to respond to the NFC signal. I will be investigating and comparing these options to the security of a conventional key based lock system.
-
-\subsection{TLS 1.2 Security}
-TLS 1.2 is the most recent version of the transport layer protocol used to secure communications across a network to prevent eavesdropping and tampering. The security of TLS 1.2 is vital for the project as it is what will be used for all communications between the phone, the lock and the server.
-\\
-\indent\cite{Meyer2014} offers a fairly comprehensive study of SSL/TLS from the very beginning when SSL 1.0 was released. The study points out that SSL/TLS have had many vulnerabilities throughout the time that they have been commonplace in securing internet traffic. It also points out that there are lots of different implementations of the TLS standard, all of which have their own differences and bugs. OpenSSL is the most used implementation on the web at the time of the study based on the usage of web servers and browsers that use the implementations. Part of this study lists a lot of different attacks that have been possible against TLS or some of its implementations over time, all of which have now been resolved in the latest implementations of the TLS standard. The existence of this list does show however that TLS is not perfect, and neither are the implementations. As pointed out by \cite{Turner2014} a lot of the security is left down to the system administrators, whether that is ensuring that only the most secure algorithms are allowed to be used, or patching a security flaw by making a configuration change. TLS can be a very secure protocol if setup in the correct way using up-to-date implementations, but it can also be insecure if badly configured or not updated when exploits are found and patched.
-\\
-\indent This research has shown me that TLS 1.2 is secure and uses cryptographically secure and proven algorithms for all the encryption it forms, but must be configured to not use the old algorithms and must be kept up-to-date by the system administrators managing the systems using it. I conclude that TLS 1.2 is sufficient for securing the smart lock system from this research, more technical investigation will be done during implementation to ensure that the system is configured as securely as possible.
-
-\subsection{Android Fingerprint Keystore Security}
-This system will utilise the android fingerprint keystore functionality to store and protect the keys used to communicate with and unlock the smart lock. The security of this keystore is fundamental to the security of the app. \cite{Does2016} show in their study a few different attacks on the fingerprint authentication methods in Android and how you would go about doing them.
-\\
-\indent The first attack \cite{Does2016} show is trying to get the device to accept a fingerprint which isn't enrolled on the device. Due to the Android system itself not knowing about any of the fingerprints enrolled into the device and therefore having to query the Trusted Execution Environment (TEE) about whether the user provided the necessary authentication, this attack isn't feasible without replacing a core component of the Android system. The attack was possible, but only by replacing fingerprintd to return a value other than 0, which is the only value the system determines as a failure, every time it is invoked. To replace fingerprintd requires root access to the system, and the system will warn you on every boot that the /system directory has been modified and could be corrupt. This means the attack is not feasible as you would need to root the device in order to be able to perform this attack.
-\\
-\indent The second attack that \cite{Does2016} performed on the Android system was trying to replay AuthTokens from the Keystore to the Keymaster which would allow them to perform cryptographic operations authenticated by the replayed AuthToken. To do this they forced the system to give them the same AuthToken every time and then waited for the challenge ID to become the same twice. When the challenge ID was returned as the same twice, they were able to send the same AuthToken and authenticate with the Keymaster to perform cryptographic operations. Two key factors of this attack are that they retrieved the AuthToken from the device memory which would not be possible without root permissions in a normal case. Secondly, they forced the device to always return the same AuthToken, which is not normal behaviour as generally, the device will return a different AuthToken with every request, along with a different challenge ID, therefore avoiding this issue.
-\\
-\indent In conclusion, the study couldn't find any exploitable flaws with the fingerprint keystore security under normal circumstances, only when they had root access to the device and could, therefore, replace binaries with ones they had constructed themselves. For my use case, I assume that if someone can gain root access to the device, they already had the ability to unlock the device and therefore access the smart lock app to unlock the door.
-
-\newpage
-\section{Software Development Project}
-
-\subsection{Requirements Analysis and Specification}
-
-\subsection{Design}
-In this section I will describe certain aspects of the project where I had to make decisions as to how they could be implemented best. In each section I will give a high level description of each method followed by which method I decided to go with and why.
-
-\subsubsection{Initiate Connection from Another Device to Core Raspberry Pi}
-This is a difficult issue to get around as finding a specific device on the network is not trivial, especially if the network is particularly large. There are various different ways I could solve this which are described below.
-
-\paragraph{Method 1 - IP Broadcasting} One option is to use IP Broadcasting, where the core uses the networks broadcast range to send data to all the other devices on the network. This would work, but I'm unsure of the reliability of this method and broadcasting the IP of the core to the entire network doesn't seem like something I would want to do. It would likely be fine on a home network, however if it was on a much larger network in a business, this method may not work at all as they could block broadcasting on their switches entirely, or if multiple cores are running on the network it could become quite congested with the number of devices trying to announce themselves to other devices.
-
-\paragraph{Method 2 - Bluetooth Sync Device to Core} This would use the Bluetooth on both devices to contact each other and find out the IP of the core on the network. The device would then use this IP to establish a connection to the core. This method has a few issues, namely the security of communicating over Bluetooth as it doesn't have the same kind of security as Wi-Fi. The other issue is that this means the two devices must be within Bluetooth range, which is much shorter than Wi-Fi range and can't be easily extended, unlike Wi-Fi range which has highly available and cheap range extenders.
-
-\paragraph{Method 3 - Contact the remote server to get the Core IP} For this to work, the Core would have to announce its IP to the remote server whenever it changed. This would be very simple as the Core will already have a connection established to the remote server. The device that is trying to connect to the Core would then simply have to contact the remote server and request the IP of the Core on the local network, and then establish a connection with it. This is the easiest method to secure as it gives one point of contact to retrieve this information, and eliminates the need for any kind of discovery. This also allows devices to be as far away from each other as required if they are on the same network.
-
-\paragraph{Decision}
-\info{Write this section}
-
-\subsubsection{Initiate Connection to Core Raspberry Pi for Initial Setup}
-
-\paragraph{Method 1 – Connect using 4-digit code through the remote server}
-The first issue here is that using a code means that you don’t have to be within proximity of the device to attach to it as it goes through the remote server to establish the link. There are some potential ways that attackers could guess or work out the code and then connect to it themselves, or find some way to force the remote server to override the owner of that Core. The initial setup should be handled on the Core itself, and the phone should not contact the remote server regarding this, the Core should contact the remote server to establish that a link has been created.
-
-\paragraph{Method 2 – Connect using Bluetooth sync between the Core and users phone}
-This method requires that the user is close to the Core to establish a link with it as they must be within Bluetooth range and push a physical button on the device to start the pairing process. If the device is already paired to an account, then it will either need to be confirmed by the current account that they want to pair to a new account or they will need to wait for a timeout to expire before the pairing can be done (unless it is cancelled from the current owners account). Within the app, they will need to select the option to connect to a new Core, and then select the Core they want to pair with from the list. The phone will then establish a Bluetooth connection with the Core, the Core will generate a private key to identify itself, and will upload the public key to the remote server for validation when communicating with it. This will bind the Core to the account the user was logged into and they will then be able to add new devices and users to the Core, as well as modify the settings for the Core, all from the app.
-
-\paragraph{Method 3 – Connect to Wi-Fi network broadcasted by the Core on users phone}
-This method requires that the used must be close to the Core to push the physical button on the device to create the Wi-Fi network to start the setup of the device. All other steps are the same as Method 2, however this method has the benefit of not requiring every device to have Bluetooth as well as Wi-Fi, lowering the physical size, cost and power required to run each device. Wi-Fi can also be more easily secured than Bluetooth, and I will carry out testing to see if I can lower the power of the Wi-Fi adapter when in access point mode to lower the range of the network, so the user must be close to the device when performing the initial setup. I will be using this method instead of the method 2 for the reasons mentioned prior.
-
-\paragraph{Decision}
-\info{Write this section}
-
-\subsubsection{Initiate Connection from New Device to Core Raspberry Pi for Setup}
-
-\paragraph{Method 1 – Bluetooth pairing between Device and Core}
-This method would work, but could introduce difficulties for the user as it requires the two devices to be close to each other as they must be within Bluetooth range. It would also require the core to store the Wi-Fi password in a readable form to give it to new devices that will also need it. This is not something that I want to do as that means if someone can access the device then they can access the Wi-Fi password and therefore the entire network.
-
-\paragraph{Method 2 – Bluetooth pairing between device and users phone}
-This method will work in the same way as the initial setup of the core. The User will press a pairing button on the device itself, then go to an add device page on their phone (only available for people who are already admins of a Core). On this page they will see any devices that are in pairing mode that they can add to their network. Once they have added the device, the app will request they connect it to the same Wi-Fi network as the Core, and request the password for the network. The device will then have successfully been added to the door unlocking system, will exit syncing mode, and will then communicate with the Core directly. The user will see the device in their list of devices on their door unlocking system, and will be able to change any settings it has.
-
-\paragraph{Method 3 – Wi-Fi pairing between the device and users phone}
-\improvement{This section should be re-written and improved upon}This method will work in the same way as method 2, however it will use Wi-Fi instead of Bluetooth for the setup, for the same reasons mentioned in Method 3 of the initial setup of the core section.
-
-\paragraph{Decision}
-\info{Write this section}
-
-\newpage
-\section{Bibliography}
-\bibliographystyle{agsm}
+% Include a Chapter names References to the table of content
+\addcontentsline{toc}{chapter}{References}
+% Rename Bibliography to References
+\renewcommand\bibname{References}
 \bibliography{../Bibliography/References}
 
-\newpage
+% Include list of all To-Do's
 \listoftodos[Notes]
 
+% Include authors publications and appendix section
+\include{Appendix/appendix}
 \end{document}
