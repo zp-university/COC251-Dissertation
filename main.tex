@@ -51,7 +51,6 @@
 % Page number placed on right side on odd pages and left side on even pages
 \fancyfoot[RO, LE] {\thepage}
 
-
 \begin{document}
 
 % Give \subsubsection numbers
@@ -66,8 +65,18 @@
 % Literature Review
 \include{Chapters/Literature_Review/literature_review}
 
-% Software Development Project
-\include{Chapters/Software_Development_Project/software_development_project}
+% Main Body of Dissertation
+% Requirements
+\include{Chapters/Requirements/requirements}
+
+% Design
+\include{Chapters/Design/design}
+
+% Detailed Design and Implementation
+
+
+% System Testing
+
 
 % Conclusion
 \include{Chapters/Conclusion/conclusion}
@@ -76,7 +85,7 @@
 \addcontentsline{toc}{chapter}{References}
 % Rename Bibliography to References
 \renewcommand\bibname{References}
-\bibliography{../Bibliography/References}
+\bibliography{references}
 
 % Include list of all To-Do's
 \listoftodos[Notes]
