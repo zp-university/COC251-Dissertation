@@ -13,11 +13,28 @@ Investigate different aspects of a secure smart lock system to see where potenti
 \end{itemize}
 
 \section{Current Smart Locks}
+
+\subsection{Overview}
 Smarts locks and internet of things (IoT) devices, in general, have increased massively in availability and use over the last couple of years and according to \cite{Buhov2016}, there will be 50 billion devices connected to the internet by 2020. Having these devices in and around your home constantly connected to the internet introduces some risk if they are not properly secured. This risk is exaggerated if they are devices that secure your home such as a smart lock.
 \\
 \indent\cite{Ho2016} compare 5 commonly available smart locks that are on the market right now. These locks operated in three different ways: touch-to-unlock, mobile app unlocking, and automatic unlocking. For my purposes, I am mostly interested in the mobile app unlocking as it will be the main way to unlock the Secure Smart Lock System. All the smart locks except for the Lockitron connect to the internet through a Bluetooth connection to the phone, rather than connecting directly, this is interesting as my system will only use Wi-Fi, and will only communicate directly with the phone if they are on the same Wi-Fi network.  The study concluded that all the smart locks except for the Lockitron were vulnerable to the attacks that they undertook, this was down to the Lockitron using Wi-Fi directly and therefore being able to verify with the server for the most up-to-date access control lists. They continue to explain that direct connections, while good, do mean that the device must include a Wi-Fi module which increases power usage on the device and so battery-only operation isn't feasible. A good point they make about the Lockitron is that it doesn't maintain its own access control list locally, so in the event of their servers being unavailable, the lock will not function. This is something I plan to avoid in my lock by maintaining a local access control list, however, due to the attacks mentioned in the study, I will ensure that any changes to the access control list are passed onto the lock before the user is told they are saved.
 \\
 \indent\cite{Ye2017} did a study specifically on the security of the August Smart Lock. This study focussed on more specific attacks such as moving the owner account from one phone to another and taking control of it. All of the attacks that they performed required root access to the Android device in order to perform, which is unreasonable to assume you will be able to get without taking the users device and knowing their unlock code to perform the rooting process. This is further shown by \cite{Fuller2017} who also tried to penetrate the August Lock but without using rooting as their main point of entry. The attacks that \cite{Ye2017} performed certainly aren't ideal, but rooting compromises the integrity of the device and exposes all the data on the device including encryption keys, app data and anything else the device has stored. As shown by \cite{Fuller2017} the August Lock has had a lot of past security issues, however, they have been fixed by the development team since then.
+
+\subsection{Specific Lock 1 Detail}
+\info{Choose a lock and write a detailed analysis of it from the webpage and official sources released by the company}
+
+\subsection{Specific Lock 2 Detail}
+\info{Choose a lock and write a detailed analysis of it from the webpage and official sources released by the company}
+
+\subsection{Specific Lock 3 Detail}
+\info{Choose a lock and write a detailed analysis of it from the webpage and official sources released by the company}
+
+\subsection{Specific Lock 4 Detail}
+\info{Choose a lock and write a detailed analysis of it from the webpage and official sources released by the company}
+
+\subsection{Specific Lock 5 Detail}
+\info{Choose a lock and write a detailed analysis of it from the webpage and official sources released by the company}
 
 \section{Certificate Pinning}
 Certificate pinning is one of many ways to ensure you are talking to the server you think you are. If you end up doing this badly, however, you can decrease the security of your app. A study performed by \cite{Buhov2016} does an evaluation of 25,000 android apps on the play store to see how many of them implement security properly. It turns out that only 21\% of applications have no issues, with 36\% having a broken implementation of either the Trust Manager or the Hostname Verifier. This issue is brought about by people using self-signed certificates or pinning certificates and trying to, therefore, implement their own version of the Trust Manager and/or Hostname Verifier but doing so incorrectly. As pointed out by the study, many of the incorrect implementations of the Trust Manager lead to the app accepting any certificate it was given, therefore breaking the chain of trust that is usually in place on the device. \cite{Tendulkar2014} back this up showing that out of the apps they tested, only 43\% use SSL verification correctly with the remaining apps either accept all certificates or accept all hostnames. An even more interesting fact that they discovered was that 53\% of the apps they tested implement this custom code to allow all certificates or all hostnames even though they are using valid and signed certificates. The inclusion of this incorrect code allows for man-in-the-middle attacks which would compromise the security of user data being transferred over the network.
