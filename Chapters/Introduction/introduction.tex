@@ -21,6 +21,18 @@ The proposed solution was to create a product unlike these other smart home devi
 
 \section{Aims and Objectives}
 
+\subsection{Aim of the Project - Technical}
+The project objective is to create a smart lock system that would be able to automate the unlocking and locking of a house's front door. The system will be comprised of multiple Raspberry Pi's with sensors connected to them to retrieve data from a variety of sources to determine whether the door should be locked or unlocked. The system will use RESTful APIs so that it can be easily extended to more devices in the future, and will ensure that all communication between devices is done so in a fully encrypted and secure manner. An example of some authentication methods that the system may use would be fingerprint, RFID/NFC, Facial Recognition, etc.
+\newline
+\newline
+Security is key as this will be securing a home. It is imperative that all communication is done securely, and that the system is certain that the user is who they say they are before they let them into the house. I will be conducting research into the best and most accessible security methods that could be used for this project for the initial implementation and demonstration. The idea however, is that the system will be built in such a way that anyone could create a device for this system using the RESTful APIs that will be available from the core control centre in the house.
+
+\subsection{Aim of the Project - For the User}
+So security is all well and good, but the product must still be easy to use for the user. At the end of the day, a lot of users don't care about how secure a product is, and will trust that the company has put in the correct security measures. This reason alone is why there are so many unsecured smart devices out in the wild as your average person doesn't have the technical knowledge to ensure that the product is secure. The companies that make these products know this and so don't actually implement robust security, something that, in my opinion, should be regulated more closely. This product should make the users lives easier whilst still maintaining the security of any normal key based locking system.
+\newline
+\newline
+A simple run down of what I would want from this lock for the user would be the following. They walk up to their home after having setup their system, and all they need to do to get in is tap their phone on the NFC pad in order to unlock the door, and have it lock itself again after they have entered the house, probably on a timer of some sorts. If the door fails to lock for any reason, the user should be notified (another issue with the august lock, if it fails to lock, it simply reports the door as locked, even if it isn't).
+
 \subsection{Project Objectives}
 \begin{itemize}
 	\item Design a Database Schema that can be used to store all the users data and settings efficiently \info{how can you measure this?}
@@ -31,20 +43,6 @@ The proposed solution was to create a product unlike these other smart home devi
 	\item Develop a minimal Android application that the user can use to setup and manage their system
 	\item Ensure that the security of the product is solid and that all communication is secured with TLS 1.2
 \end{itemize}
-
-\subsection{Aim of the Project - Technical}
-\info{Aim should go before objectives}
-The project objective is to create a smart lock system that would be able to automate the unlocking and locking of a house's front door. The system will be comprised of multiple Raspberry Pi's with sensors connected to them to retrieve data from a variety of sources to determine whether the door should be locked or unlocked. The system will use RESTful APIs so that it can be easily extended to more devices in the future, and will ensure that all communication between devices is done so in a fully encrypted and secure manner. An example of some authentication methods that the system may use would be fingerprint, RFID/NFC, Facial Recognition, etc.
-\newline
-\newline
-Security is key as this will be securing a home. It is imperative that all communication is done securely, and that the system is certain that the user is who they say they are before they let them into the house. I will be conducting research into the best and most accessible security methods that could be used for this project for the initial implementation and demonstration. The idea however, is that the system will be built in such a way that anyone could create a device for this system using the RESTful APIs that will be available from the core control centre in the house.
-
-\subsection{Aim of the Project - For the User}
-\info{Aim should go before objectives}
-So security is all well and good, but the product must still be easy to use for the user. At the end of the day, a lot of users don't care about how secure a product is, and will trust that the company has put in the correct security measures. This reason alone is why there are so many unsecured smart devices out in the wild as your average person doesn't have the technical knowledge to ensure that the product is secure. The companies that make these products know this and so don't actually implement robust security, something that, in my opinion, should be regulated more closely. This product should make the users lives easier whilst still maintaining the security of any normal key based locking system.
-\newline
-\newline
-A simple run down of what I would want from this lock for the user would be the following. They walk up to their home after having setup their system, and all they need to do to get in is tap their phone on the NFC pad in order to unlock the door, and have it lock itself again after they have entered the house, probably on a timer of some sorts. If the door fails to lock for any reason, the user should be notified (another issue with the august lock, if it fails to lock, it simply reports the door as locked, even if it isn't).
 
 
 %\section{Problem Formulation}
