@@ -25,7 +25,7 @@ Smarts locks and internet of things (IoT) devices, in general, have increased ma
 \subsubsection{Overview}
 The August lock is one of the most well known locks on the market, it has a wide variety of different features and comes with support for both Android and iOS devices. One of the major benefits of the august lock is you can fit it to your existing door lock so installation required is minimal. There are two different models of the August Lock, their original model and their new "Smart Lock Pro".
 
-\subsubsection{Significant Features}
+\subsubsection*{Significant Features}
 \begin{itemize}
 	\item Mobile phone is now your key
 	\item You can allow other people access to your property with virtual keys and can also set time constraints on each virtual key
@@ -37,20 +37,20 @@ The August lock is one of the most well known locks on the market, it has a wide
 \end{itemize}
 \improvement{Figure out how to put sources down for this section}
 
-\subsubsection{Auto Unlocking/Locking}
+\subsubsection*{Auto Unlocking/Locking}
 According to \cite{August2017}, this feature works by using the bluetooth on your phone along with GPS and Wi-Fi to detect when you are in range of the door and then unlocks it for you over bluetooth. When you are more than 200m away from your house, the phone sits in what they call "away mode" which means it is no longer searching for the lock over bluetooth until the phone gets near to the house again. The problem with this kind of system is that bluetooth is vulnerable to relay attacks, and if the phone is using Wi-Fi to detect its location then according to \cite{Feng2014} it's a fairly trivial attack to spoof the devices location, therefore activating the bluetooth search for the lock allowing for bluetooth relay attacks on the app and the lock. Aside from attacks, the feature itself has other issues such as not automatically locking until you are quite a distance from your lock, in the case of \cite{So2017} the smart lock was still unlocked until she was 1/4 mile from her lock. This is plenty of time for someone else to walk into your house if you live in a built-up area.
 
-\subsubsection{DoorSense}
+\subsubsection*{DoorSense}
 DoorSense allows the lock to send you a notification if your door is left open for more than a certain amount of time. This is a feature that will be rarely useful as most people don't leave their door ajar when they enter or leave the house, but in the odd occasion that you do, it would be good to know. However, as mentioned by \cite{So2017}, this feature definitely has some issues, after installing the DoorSense sensor into the doorframe and enabling notifications if the door is left open for one minute, she received no notifications. She then checked it manually by leaving the door open and waiting for notifications on her phone, but got nothing. When working however, the DoorSense feature does integrate with the smart lock directly and allow for instant auto locking when the door is closed which alleviates some of the issues mentioned above.
 
-\subsubsection{Conclusion}
+\subsubsection*{Conclusion}
 The August Smart Lock Pro + Connect is a package with a lot of features, however some of them don't work as well as they should, and coming to rely on them may one day result in your house being left unlocked if they don't work as expected. The product has good integration with other technologies such as Apple HomeKit, Amazon Alexa and Google Home, however there's no API available for you to add your own integrations into the system which would be a nice addition.
 
 \subsection{Kwikset Kevo}
-\subsubsection{Overview}
+\subsubsection*{Overview}
 Kwikset are a well known lock manufacturer who have jumped on the smart lock bandwagon. The Kevo lock has multiple different designs which allow you to choose one which suits your home. On the technology side it isn't slacking either coming with integrations into multiple different smart home technologies and the ability to add remote access with the kevo plus, much like the august connect does.
 
-\subsubsection{Significant Features}
+\subsubsection*{Significant Features}
 \begin{itemize}
 	\item Mobile phone is now your key
 	\item You can allow other people access to your property with virtual keys and can also set time constraints on each virtual key
@@ -61,16 +61,16 @@ Kwikset are a well known lock manufacturer who have jumped on the smart lock ban
 	\item Can purchase a fob that allows keyless entry without a smartphone
 \end{itemize}
 
-\subsubsection{Auto Unlocking/Locking}
+\subsubsection*{Auto Unlocking/Locking}
 This lock allows auto unlocking through a setting in the app, however auto locking has to be enabled by changing a dip switch on the lock itself which might not be obvious to a normal user. The auto unlocking is done by communicating with a phone that is within range and verifying that it has a key corresponding to the lock, but also checking that the phone is outside the house rather than inside to ensure security. Unlike the August lock, the auto unlock does require a physical touch on the lock in order for it to detect the phone and unlock the door. According to \cite{DeLooper2018} this process of unlocking takes a few seconds, so you don't have the convenience of walking up to your door and it already being open for you. The auto locking is also worse than the August lock as it isn't based on proximity, it's just based on a simple timer, however it means you know that the lock will definitely be locked after a set time of you leaving, which would add to your peace of mind and increases security.
 
-\subsubsection{Kevo Fob}
+\subsubsection*{Kevo Fob}
 The Kevo Fob allows you to have keyless access to the house without having to use your smartphone. This is something that the August lock does not offer and would be great for anyone who doesn't have a smartphone such as older relatives. This is something I plan to have in my system time permitting as it would be good to allow entry to the property without a traditional key but also without requiring the use of a smartphone.
 
-%\subsubsection{Smart Home Integration}
+%\subsubsection*{Smart Home Integration}
 %Potential subsubsection, this lock has less integrations than other locks do
 
-\subsubsection{Conclusion}
+\subsubsection*{Conclusion}
 The Kwikset Kevo + Kevo Plus is less feature filled than the August smart lock, but comes from a much more well known company in the world of locks. The lock lacks integrations with other products compared to the likes of the August Lock, but I couldn't find any published security flaws with the Kwikset Kevo compared to the large amount that are published for the August Lock.
 
 \subsection{Specific Lock 3 Detail}
