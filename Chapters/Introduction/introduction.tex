@@ -1,70 +1,40 @@
-%This section will be relatively short. It should introduce the reader to the problem that
-%is to be tackled, and provide a brief indication of the context within which the problem
-%exists. This will include some consideration of appropriate related literature and/or
-%past attempts at solving the problem, although the main consideration of previous work
-%should be left until the Literature Survey. The most important part of the introduction
-%is the identification of why the problem is of particular interest and worthy of further
-%study. The introduction should seek to draw the reader into the remainder of the
-%dissertation, whetting their appetite to learn more of the problem and its solution. It
-%should introduce the structure of the document and provide a framework for the reader
-%as progress is made through the remainder of the dissertation.
+% !TeX root = ../../main.tex
 \chapter{Introduction}
 \label{chap:intro}
-\info{Zack, you need to explicitly tell the novelty of your project in this opening chapter. You have made some high-level statements such as ``...to create a product unlike these other smart home devices...'', but you need to make technical arguments too.}
 
 \section{Problem Statement}
-\info{be more specific on the weaknesses of August and how your project will differ/improve these}
-With smart devices being created left right and centre nowadays with very little care towards security, it is going to become more common that houses are being hacked with devices slowly controlling more and more sensitive areas of the home. An example of this would be the August lock, an idea similar to what I am trying to achieve here, however the device has multiple security flaws that were found and outlined at the security conference Defcon\info{references and examples}. This is far from the first smart home device that was found to have security issues, there have been hundreds of different WiFi Security cameras that connect themselves to the web with little care towards the security of that device which has the capability of letting someone spy on your home. Not to long ago, there was a huge attack that brought down DynDNS, and therefore all the sites that used it which included Twitter, Spotify and Reddit. \info{references} This attack was using the internet connections of innocent people who happened to have insecure smart home devices in their homes. Millions of smart home devices were involved in the attack as they were hacked due to their inadequate or sometimes non-existent security.
-\newline
-\newline
-The proposed solution was to create a product unlike these other smart home devices, one that is secure enough that I would be happy to put it in my own home. At the end of the day, a camera being infected doesn't matter so much, but a system that unlocks your house needs to be bulletproof on the security front. Looking at the implementation of the August lock, it just isn't something that I would be willing to use to secure my house, yet thousands, maybe more unknowing customers have purchased the august lock and use it to secure their homes every day. I want to create something that is easy to use and secure, something that most companies seem to have trouble with nowadays.
+With smart devices being created left right and centre nowadays with very little care towards security, it is going to become more common that houses are being hacked with devices slowly controlling more and more sensitive areas of the home. An example of this would be the August lock, an idea similar to what I am trying to achieve here, however the device has multiple security flaws that were found and outlined at the security conference Defcon and is detailed in the paper by \cite{Fuller2017}. This is far from the first smart home device that was found to have security issues, there have been hundreds of different WiFi Security cameras that connect themselves to the web with little care towards the security of that device which has the capability of letting someone spy on your home. Not to long ago, there was a huge attack that brought down DynDNS, and therefore all the sites that used it which included Twitter, Spotify and Reddit were heavily impacted. This attack was using the internet connections of innocent people who happened to have insecure smart home devices in their homes. Millions of smart home devices were involved in the attack as they were hacked due to their inadequate or sometimes non-existent security with Dyn saying that ``Not only has it highlighted vulnerabilities in the security of ``Internet of Things'' (IOT) devices that need to be addressed...'' \citep{Hilton2016}. The Guardian also ran an article on the attack saying that ``Because it has so many internet-connected devices to choose from, attacks from Mirai are much larger than what most DDoS attacks could previously achieve'' \citep{Woolf2016}. This is a serious issue that has the potential to become much larger if IoT device manufactures keep making poorly secured devices.
+\\
+\indent The proposed solution was to create a product unlike these other smart home devices, one that is secure enough that I would be happy to put it in my own home. At the end of the day, a camera being infected doesn't matter so much, but a system that unlocks your house needs to be bulletproof on the security front. Looking at the implementation of the August lock, it just isn't something that I would be willing to use to secure my house, yet thousands, maybe more unknowing customers have purchased the august lock and use it to secure their homes every day. I want to create something that is easy to use and secure, something that most companies seem to have trouble with nowadays.
+\\
+\indent Some current locks on the market have glaring security holes that still have not been fixed, it is these issues that I would like to learn from and fix in my lock. ``The hacker jmaxxz found that the key in slow 0 has special privileges and coined this key the `firmware key'.'' \citep{Fuller2017} This issue is with the August Lock and that master key is accessible by the owner and can gain full control of the lock. This means that if the lock was sold on, the previous owner could have theoretically kept the master key and could gain access to the lock again which is a huge security risk. Another issue I want to solve is removing access from others when the lock is offline or the user is away from home. This is a flaw of many smart locks as they work over bluetooth, some without Wi-Fi bridges which means outside of the home they are completely inaccessible. There are other issues with smart locks on the market that I will detail later, however these are the main two I will be taking into account whilst developing my smart lock system.
 
 \section{Aims and Objectives}
 
 \subsection{Aim of the Project - Technical}
-The project objective is to create a smart lock system that would be able to automate the unlocking and locking of a house's front door. The system will be comprised of multiple Raspberry Pi's with sensors connected to them to retrieve data from a variety of sources to determine whether the door should be locked or unlocked. The system will use RESTful APIs so that it can be easily extended to more devices in the future, and will ensure that all communication between devices is done so in a fully encrypted and secure manner. An example of some authentication methods that the system may use would be fingerprint, RFID/NFC, Facial Recognition, etc.
-\newline
-\newline
-Security is key as this will be securing a home. It is imperative that all communication is done securely, and that the system is certain that the user is who they say they are before they let them into the house. I will be conducting research into the best and most accessible security methods that could be used for this project for the initial implementation and demonstration. The idea however, is that the system will be built in such a way that anyone could create a device for this system using the RESTful APIs that will be available from the core control centre in the house.
+The project objective is to create a smart lock system that would be able to automate the unlocking and locking of a house's front door. The system will be comprised of multiple Raspberry Pi's with sensors connected to them to retrieve data from a variety of sources to determine whether the door should be locked or unlocked. The system will use RESTful APIs so that it can be easily extended to more devices in the future, and will ensure that all communication between devices is done so in a fully encrypted and secure manner. An example of some authentication methods that the system may use would be using the phone itself, fingerprint, RFID/NFC, Facial Recognition, etc.
+\\
+\indent Security is key as this will be securing a home. It is imperative that all communication is done securely, and that the system is certain that the user is who they say they are before they let them into the house. I will be conducting research into the best and most accessible security methods that could be used for this project for the initial implementation and demonstration. The idea however, is that the system will be built in such a way that anyone could create a device for this system using the RESTful APIs that will be available from the core control centre in the house.
 
 \subsection{Aim of the Project - For the User}
 So security is all well and good, but the product must still be easy to use for the user. At the end of the day, a lot of users don't care about how secure a product is, and will trust that the company has put in the correct security measures. This reason alone is why there are so many unsecured smart devices out in the wild as your average person doesn't have the technical knowledge to ensure that the product is secure. The companies that make these products know this and so don't actually implement robust security, something that, in my opinion, should be regulated more closely. This product should make the users lives easier whilst still maintaining the security of any normal key based locking system.
-\newline
-\newline
-A simple run down of what I would want from this lock for the user would be the following. They walk up to their home after having setup their system, and all they need to do to get in is tap their phone on the NFC pad in order to unlock the door, and have it lock itself again after they have entered the house, probably on a timer of some sorts. If the door fails to lock for any reason, the user should be notified (another issue with the august lock, if it fails to lock, it simply reports the door as locked, even if it isn't).
+\\
+\indent A simple run down of what I would want from this lock for the user would be the following. They walk up to their home after having setup their system, and all they need to do to get in is tap unlock on their phone screen to unlock the door, and potentially have it lock itself again after they have entered the house, probably on a timer. If the door fails to lock for any reason, the user should be notified (another issue with the august lock, if it fails to lock, it simply reports the door as locked, even if it isn't).
 
-\subsection{Project Objectives}
+\subsection{Project Objectives - Technical}
 \begin{itemize}
-	\item Design a Database Schema that can be used to store all the users data and settings efficiently \info{how can you measure this?}
+	\item Design a Database Schema that can be used to store all the users data and settings efficiently (each query takes under 0.5 seconds)
 	\item Develop a core application for the house that will control the main system functions
-	\item Develop a REST API for the core application that other systems (i.e. authentication systems) can talk to
-	\item Implement a minimum of two authentication methods that can be used to unlock the door
-	\item Develop a server system that can be used for the core to sync with and for the user to communicate with the system when outside of the home
-	\item Develop a minimal Android application that the user can use to setup and manage their system
+	\item Develop a REST API for the core application that other systems (i.e. door unlock module or authentication systems) can talk to
+	\item Implement a minimum of one authentication method that can be used to unlock the door
+	\item Develop a central server that can be used as a central point of confidence for all data, authentication keys and settings
 	\item Ensure that the security of the product is solid and that all communication is secured with TLS 1.2
 \end{itemize}
 
-
-%\section{Problem Formulation}
-%
-%\section{Aims and Objectives}
-%
-%\section{Outline of Areas of Research}
-%
-%\subsection{Sub Section 1}
-%
-%\subsection{Sub Section 2}
-%
-%\subsubsection{Sub Sub Section 1}
-%
-%\subsubsection{Sub Sub Section 2}
-%
-%\subsubsection{Sub Sub Section 3}
-%
-%\subsubsection{Sub Sub Section 4}
-%
-%\subsection{Sub Section 3}
-%
-%\section{Contribution of Thesis}
-%
-%\section{Thesis Outline}
+\subsection{Project Objectives - For the User}
+\begin{itemize}
+	\item Develop a minimal Android application that the user can use to setup and use their system
+	\item Lock should be simple and quick to setup after initial installation (easy for user to understand how to operate it and takes less than 5 minutes to complete setup)
+	\item Ensure security of the system doesn't affect the users overall experience
+	\info{Add more items to here}
+\end{itemize}
