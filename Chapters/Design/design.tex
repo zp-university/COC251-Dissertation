@@ -67,12 +67,6 @@ Figure 4.3 below shows the planned sequence of interactions between different de
 		\includegraphics[height=0.6\textheight,keepaspectratio]{"Graphics/New Device Pairing to Network"}
 \end{figure}
 
-\newpage
-\section{Project Plan}
-\begin{center}
-	\includegraphics[angle=90,width=\textwidth,height=\textheight,keepaspectratio]{Graphics/FYP-Project-Plan}
-\end{center}
-
 \subsection{Technical Design Decisions}
 In this section I will describe certain aspects of the project where I had to make decisions as to how they could be implemented best. In each section I will give a high level description of each method followed by which method I decided to go with and why. Some of the solutions may not be required as they may not get implemented in the demo, however they would be required for a full implementation and so are worth discussing.
 
@@ -115,3 +109,21 @@ This method will work in the same way as method 2, however it will use Wi-Fi ins
 
 \paragraph*{Decision}
 Method 3 has been chosen for the same reason as in the Initiate Connection to Core Raspberry Pi for Initial Setup section.
+
+\section{Tools Used}
+
+\subsection{Version Control}
+Version control is a very useful tool that is used throughout the software engineering industry as it allows much better management of source code and development in general. It contains a complete history of all changes that have been made to the project from the very beginning. This is very useful if you need to revert a change or diagnose a problem and find what change may have caused it.
+\\
+\indent There are a wide range of different Version Control Software's (VCS), however I decided to go with Git. Git is a very extensive and powerful tool, and is by far the most widely used VCS out there. Git can run locally and remotely so you can push your changes to a remote server so that others can see them and they are backed up. I use the open source free software Gitlab in order to host my own Git server so I used this for all my Git projects.
+\\
+\indent Alongside git itself I used the WebStorm and Android Studio git integration to help with committing code and pushing it to the remote server as both of those IDEs come with git integration built in. I also worked with git on the command line for pulling down the code on the devices that were running it.
+
+\subsection{Integrated Development Environments (IDEs)}
+IDEs are extremely useful tools that come bundled with a huge array of features all aiming to make developing easier and less error prone. They offer features such as auto-completion, auto-generation of certain code snippets, detection of potential errors, git integration, and much more.
+
+\subsubsection*{WebStorm}
+One of the IDEs used widely in this project was WebStorm as all of the APIs were written in Node.js which WebStorm has support for. Built-in support for Node.js, npm, git and more made the development process much smoother and faster. WebStorm is part of a much larger suite of IDEs made by JetBrains, they also make IntelliJ which is what AndroidStudio is based off of.
+
+\subsubsection*{Android Studio}
+Android Studio is the other IDE that I used in this project as it basically required if you want to write applications for Android. It comes with all the tools you need to compile and run android apps, including virtual android devices, a package manager for different versions of the android api, and many other great and useful tools. Installing and running all of this manually would take a huge amount of time, so using this tool vastly decreases the amount of time required for development and testing iterations.

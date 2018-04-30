@@ -3,29 +3,8 @@
 \label{chap:implementation}
 In this chapter I will give details of the implementation of the previously mentioned ideas and requirements. This will cover technical aspects of the implementation, problems experienced along the way, any tools used to aid development and discussion on what languages where used and why. This chapter will be split up into sections for each component of the system in order to discuss why certain choices were made for that specific platform.
 
-\section{Tools Used}
-\todo[author=pt]{This section belongs to methodology section (e.g. design and methodology)}
-
-\subsection{Version Control}
-Version control is a very useful tool that is used throughout the software engineering industry as it allows much better management of source code and development in general. It contains a complete history of all changes that have been made to the project from the very beginning. This is very useful if you need to revert a change or diagnose a problem and find what change may have caused it.
-\\
-\indent There are a wide range of different Version Control Software's (VCS), however I decided to go with Git. Git is a very extensive and powerful tool, and is by far the most widely used VCS out there. Git can run locally and remotely so you can push your changes to a remote server so that others can see them and they are backed up. I use the open source free software Gitlab in order to host my own Git server so I used this for all my Git projects.
-\\
-\indent Alongside git itself I used the WebStorm and Android Studio git integration to help with committing code and pushing it to the remote server as both of those IDEs come with git integration built in. I also worked with git on the command line for pulling down the code on the devices that were running it.
-
-\subsection{Integrated Development Environments (IDEs)}
-IDEs are extremely useful tools that come bundled with a huge array of features all aiming to make developing easier and less error prone. They offer features such as auto-completion, auto-generation of certain code snippets, detection of potential errors, git integration, and much more.
-
-\subsubsection*{WebStorm}
-One of the IDEs used widely in this project was WebStorm as all of the APIs were written in Node.js which WebStorm has support for. Built-in support for Node.js, npm, git and more made the development process much smoother and faster. WebStorm is part of a much larger suite of IDEs made by JetBrains, they also make IntelliJ which is what AndroidStudio is based off of.
-
-\subsubsection*{Android Studio}
-Android Studio is the other IDE that I used in this project as it basically required if you want to write applications for Android. It comes with all the tools you need to compile and run android apps, including virtual android devices, a package manager for different versions of the android api, and many other great and useful tools. Installing and running all of this manually would take a huge amount of time, so using this tool vastly decreases the amount of time required for development and testing iterations.
-
 \section{Central Server}
 The first section of the project that I worked on was the central server. The reason for this was that every other part of the system would rely on this in some way, and so it would get in the way if not done early on in the project. The plan was that in the eyes of the other parts of the application, the central server would just be a REST API that they could call to send and retrieve data, and that data would get passed to the other parts of the application that required them.
-
-\todo[author=pt]{For all implementations - You need to be more specific on 'your implementation'. How did you implement it? what are the input/output parameters and their values?}
 
 \subsection{Programming Language}
 For this section of the project I decided to go with Node.js as I have used it before to make REST APIs and it provides high performance and is very quick to develop in. I used it along with an API design tool called Swagger which allows you to create a specification for your entire API, automatically generating documentation for it. It can also automatically generate boilerplate code for the server side and client side applications to make development much faster, it's a really useful tool. One of the major dependencies used within my development was mongoose which is a library that allows you to connect to a MongoDB database and make database calls in an asynchronous way with minimal code. Node.js has the benefit of encouraging you to write everything in an asynchronous manner, so almost everything uses callbacks rather than conventional nested statements. This has a huge performance benefit as the entire application runs on multiple threads rather than just a single thread.
@@ -233,9 +212,6 @@ Here I will list any improvements I would make if I were to approach this projec
 
 \subsection{Wi-Fi Hotspot Security}
 Whilst programming the Wi-Fi hotspot section of the android application, I realised that there was no possible way to verify that the device I was connecting to was the device that I had in front of me using the current hardware I had. By the time I realised this I wouldn't have had time to order the extra parts required to get it ready in time for a demo, however I came up with a solution to the problem. The issue lies within how certificate trust works, with a certificate authority validating that you own a domain and then providing a public and private key pair to you. In a private network like the one created with a hotspot, this is not possible, and creating your own self-signed certificate means that the android application can't verify which device it is connected to. This would allow someone who was waiting for you to setup your device to create another Wi-Fi hotspot with the same name and have you connect to them. By doing this they could get access to your Wi-Fi password as you wouldn't realise it wasn't the same device that you see in front of you. In order for the user to confirm this, I would want to add a small screen to the device that could display a short code or QR code that the phone could scan as this direct method of communication can be verified. The code would be a hash of the https certificates public key and so could be verified by the phone to ensure they match, and if they do you're connected to the right device. This is a very unlikely scenario anyway as it requires an attacker to be waiting outside your home for you to setup the smartlock, and realistically they have a very small window to mimic the smart lock Wi-Fi and have the user connect to them instead.
-
-\subsection{Another Improvement}
-\improvement{Write another improvement}
 
 \section{Compared to other locks}
 Based on the issues I mentioned with other known locks in my problem statement, I will now evaluate what I have done to remove those security risks in my smart lock.

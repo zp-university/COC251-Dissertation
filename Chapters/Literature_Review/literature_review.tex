@@ -35,7 +35,6 @@ The August lock is one of the most well known locks on the market, it has a wide
 	\item Can automatically unlock and lock the door when you enter and leave the house
 	\item DoorSense allows the lock to detect if the door is left ajar
 \end{itemize}
-\improvement{Figure out how to put sources down for this section}
 
 \subsubsection*{Auto Unlocking/Locking}
 According to \cite{August2017}, this feature works by using the bluetooth on your phone along with GPS and Wi-Fi to detect when you are in range of the door and then unlocks it for you over bluetooth. When you are more than 200m away from your house, the phone sits in what they call "away mode" which means it is no longer searching for the lock over bluetooth until the phone gets near to the house again. The problem with this kind of system is that bluetooth is vulnerable to relay attacks, and if the phone is using Wi-Fi to detect its location then according to \cite{Feng2014} it's a fairly trivial attack to spoof the devices location, therefore activating the bluetooth search for the lock allowing for bluetooth relay attacks on the app and the lock. Aside from attacks, the feature itself has other issues such as not automatically locking until you are quite a distance from your lock, in the case of \cite{So2017} the smart lock was still unlocked until she was 1/4 mile from her lock. This is plenty of time for someone else to walk into your house if you live in a built-up area.
@@ -72,15 +71,6 @@ The Kevo Fob allows you to have keyless access to the house without having to us
 
 \subsubsection*{Conclusion}
 The Kwikset Kevo + Kevo Plus is less feature filled than the August smart lock, but comes from a much more well known company in the world of locks. The lock lacks integrations with other products compared to the likes of the August Lock, but I couldn't find any published security flaws with the Kwikset Kevo compared to the large amount that are published for the August Lock.
-
-\subsection{Specific Lock 3 Detail}
-\info{Choose a lock and write a detailed analysis of it from the webpage and official sources released by the company}
-
-\subsection{Specific Lock 4 Detail}
-\info{Choose a lock and write a detailed analysis of it from the webpage and official sources released by the company}
-
-\subsection{Specific Lock 5 Detail}
-\info{Choose a lock and write a detailed analysis of it from the webpage and official sources released by the company}
 
 \section{Certificate Pinning}
 Certificate pinning is one of many ways to ensure you are talking to the server you think you are. If you end up doing this badly, however, you can decrease the security of your app. A study performed by \cite{Buhov2016} does an evaluation of 25,000 android apps on the play store to see how many of them implement security properly. It turns out that only 21\% of applications have no issues, with 36\% having a broken implementation of either the Trust Manager or the Hostname Verifier. This issue is brought about by people using self-signed certificates or pinning certificates and trying to, therefore, implement their own version of the Trust Manager and/or Hostname Verifier but doing so incorrectly. As pointed out by the study, many of the incorrect implementations of the Trust Manager lead to the app accepting any certificate it was given, therefore breaking the chain of trust that is usually in place on the device. \cite{Tendulkar2014} back this up showing that out of the apps they tested, only 43\% use SSL verification correctly with the remaining apps either accept all certificates or accept all hostnames. An even more interesting fact that they discovered was that 53\% of the apps they tested implement this custom code to allow all certificates or all hostnames even though they are using valid and signed certificates. The inclusion of this incorrect code allows for man-in-the-middle attacks which would compromise the security of user data being transferred over the network.
