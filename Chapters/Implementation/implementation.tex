@@ -4,6 +4,7 @@
 In this chapter I will give details of the implementation of the previously mentioned ideas and requirements. This will cover technical aspects of the implementation, problems experienced along the way, any tools used to aid development and discussion on what languages where used and why. This chapter will be split up into sections for each component of the system in order to discuss why certain choices were made for that specific platform.
 
 \section{Tools Used}
+\todo[author=pt]{This section belongs to methodology section (e.g. design and methodology)}
 \subsection{Version Control}
 Version control is a very useful tool that is used throughout the software engineering industry as it allows much better management of source code and development in general. It contains a complete history of all changes that have been made to the project from the very beginning. This is very useful if you need to revert a change or diagnose a problem and find what change may have caused it.
 \\
@@ -22,6 +23,9 @@ Android Studio is the other IDE that I used in this project as it basically requ
 
 \section{Central Server}
 The first section of the project that I worked on was the central server. The reason for this was that every other part of the system would rely on this in some way, and so it would get in the way if not done early on in the project. The plan was that in the eyes of the other parts of the application, the central server would just be a REST API that they could call to send and retrieve data, and that data would get passed to the other parts of the application that required them.
+
+
+\todo[author=pt]{For all implementations - You need to be more specific on 'your implementation'. How did you implement it? what are the input/output parameters and their values?}
 
 \subsection{Programming Language}
 For this section of the project I decided to go with Node.js as I have used it before to make REST APIs and it provides high performance and is very quick to develop in. I used it along with an API design tool called Swagger which allows you to create a specification for your entire API, automatically generating documentation for it. It can also automatically generate boilerplate code for the server side and client side applications to make development much faster, it's a really useful tool. One of the major dependencies used within my development was mongoose which is a library that allows you to connect to a MongoDB database and make database calls in an asynchronous way with minimal code. Node.js has the benefit of encouraging you to write everything in an asynchronous manner, so almost everything uses callbacks rather than conventional nested statements. This has a huge performance benefit as the entire application runs on multiple threads rather than just a single thread.
