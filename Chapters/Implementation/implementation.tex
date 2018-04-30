@@ -5,6 +5,7 @@ In this chapter I will give details of the implementation of the previously ment
 
 \section{Tools Used}
 \todo[author=pt]{This section belongs to methodology section (e.g. design and methodology)}
+
 \subsection{Version Control}
 Version control is a very useful tool that is used throughout the software engineering industry as it allows much better management of source code and development in general. It contains a complete history of all changes that have been made to the project from the very beginning. This is very useful if you need to revert a change or diagnose a problem and find what change may have caused it.
 \\
@@ -24,7 +25,6 @@ Android Studio is the other IDE that I used in this project as it basically requ
 \section{Central Server}
 The first section of the project that I worked on was the central server. The reason for this was that every other part of the system would rely on this in some way, and so it would get in the way if not done early on in the project. The plan was that in the eyes of the other parts of the application, the central server would just be a REST API that they could call to send and retrieve data, and that data would get passed to the other parts of the application that required them.
 
-
 \todo[author=pt]{For all implementations - You need to be more specific on 'your implementation'. How did you implement it? what are the input/output parameters and their values?}
 
 \subsection{Programming Language}
@@ -35,10 +35,132 @@ This was the first part of the server that needed to be written, and security wa
 \\
 \indent For my system, I wanted it to be possible to later build in a system where the user could invalidate any device that is logged into their account, forcing that device to login again. This would be useful if the device was stolen and the user didn't want the thief to be able to also get into their house. In order to accommodate this in the future, I designed the JWTs so that they contain an ID which is stored in the database which then links that ID to a User object. If the JWT needs to be invalidated, simply delete the ID from the database and the device will no longer be able to authenticate and will be forced to login again, requiring the username and password for the account.
 \\
-\indent This system is used for both users and devices except that a device doesn't require a username and password. A device can register itself with the system and receives a JWT in return, it gives the server it's UUID and name during this process. Once the device is registered, a user can then register it to their account.
+\indent This system is used for both users and devices except that a device doesn't require a username and password. A device can register itself with the system and receives a JWT in return, it gives the server it's UUID and name during this process. Once the device is registered, a user can then register it to their account. An example of the request you would need to send and response you would receive from the login endpoint is shown in Figure 5.1 below. The same is shown for the signup request in figure 5.2, demonstrating that the system works as intended, accepting the details required and responding with the JWT as intended.
+\begin{figure}[H]
+	\caption{Login Request and Response Example}
+		\begin{Verbatim}[frame=single]
+POST /api/v1/auth/login HTTP/1.1
+Host: smartlockapp.zackpollard.pro
+Content-Type: application/json
+Content-Length: 57
+Request Body:
+{
+	"username": "username",
+	"password": "password"
+}
+Response Body:
+{
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aWQiOiI1YWU3..."
+}
+		\end{Verbatim}
+\end{figure}
+
+\begin{figure}[H]
+	\caption{Signup Request and Response Example}
+	\begin{Verbatim}[frame=single]
+POST /api/v1/auth/signup HTTP/1.1
+Host: smartlockapp.zackpollard.pro
+Content-Type: application/json
+Content-Length: 138
+Request Body:
+{
+	"username": "username",
+	"password": "password",
+	"email": "abc123@gmail.com",
+	"firstname": "James",
+	"lastname": "Smith"
+}
+Response Body:
+{
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aWQiOiI1YWU3..."
+}
+	\end{Verbatim}
+\end{figure}
 
 \subsection{Device and User API}
 The device API includes the login api section for devices, but also includes the ability for the device to query information about itself so that it can be continually updating based on what the user does. This is how it responds to lock and unlock requests for example. The User API has the ability to set the device that is linked to their account using the UUID of the device, this then binds the device to their account, and the user can then send lock/unlock requests to the device through the API and get the device status using the user API.
+\\
+\indent Figure 5.3 below demonstrates an example call to the device register endpoint which is what the core raspberry pi would call during the setup phase once it has received Wi-Fi credentials. Figure 5.4 shows an example of the user device add request which is used so the user can associate the device with their account and then control it. It is the first request which requires authorization as you can see through the headers provided in the request it sends the JWT provided earlier by the login request. Figure 5.5 demonstrates how the user locks the device using the user device lock endpoint. This endpoint uses the JWT of the user to find out which lock they have control of and then toggles the locked status of that device to the state that they sent in the request. As you can see from the response the locked status has been toggled on the server, and the smart lock will then see this and change its state to unlocked. Finally, Figure 5.6 shows how the user can query their lock for the current status using the user device endpoint. This is simply a GET request that only required the users JWT in order to respond with the device information. This is how the android app updates its representation of the lock status constantly for the user.
+
+\begin{figure}[H]
+	\caption{Device Register Request and Response Example}
+	\begin{Verbatim}[frame=single]
+POST /api/v1/device/register HTTP/1.1
+Host: smartlockapp.zackpollard.pro
+Content-Type: application/json
+Content-Length: 90
+Request Body:
+{
+	"name": "SMARTLOCK-CORE-ABC123",
+	"uuid": "1a08a291-9ad2-4bc7-b471-426a543f2ce2"
+}
+Response Body:
+{
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aWQiOiI1YWU3..."
+}
+	\end{Verbatim}
+\end{figure}
+
+\begin{figure}[H]
+	\caption{User Device Add Request and Response Example}
+	\begin{Verbatim}[frame=single]
+POST /api/v1/user/device/add HTTP/1.1
+Host: smartlockapp.zackpollard.pro
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aWQiOiI1Y...
+Content-Length: 54
+Request Body:
+{
+	"uuid": "1a08a291-9ad2-4bc7-b471-426a543f2ce2"
+}
+Response Body:
+{
+	"name": "SMARTLOCK-CORE-ABC123",
+	"uuid": "1a08a291-9ad2-4bc7-b471-426a543f2ce2",
+	"locked": true,
+	"created": "2018-04-30T11:37:18.702Z"
+}
+	\end{Verbatim}
+\end{figure}
+
+\begin{figure}[H]
+	\caption{User Device Lock Request and Response Example}
+	\begin{Verbatim}[frame=single]
+POST /api/v1/user/device/lock HTTP/1.1
+Host: smartlockapp.zackpollard.pro
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aWQiOiI1Y...
+Content-Length: 23
+Request Body:
+{
+	"locked": false
+}
+Response Body:
+{
+	"name": "SMARTLOCK-CORE-ABC123",
+	"uuid": "1a08a291-9ad2-4bc7-b471-426a543f2ce2",
+	"locked": false,
+	"created": "2018-04-30T11:37:18.702Z"
+}
+	\end{Verbatim}
+\end{figure}
+
+\begin{figure}[H]
+	\caption{User Device Request and Response Example}
+	\begin{Verbatim}[frame=single]
+GET /api/v1/user/device HTTP/1.1
+Host: smartlockapp.zackpollard.pro
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aWQiOiI1Y...
+Response Body:
+{
+	"name": "SMARTLOCK-CORE-ABC123",
+	"uuid": "1a08a291-9ad2-4bc7-b471-426a543f2ce2",
+	"locked": false,
+	"created": "2018-04-30T11:37:18.702Z"
+}
+	\end{Verbatim}
+\end{figure}
 
 \subsection{Other Software}
 The system runs Nginx which is a web server software, the Node.js API runs its own web server on localhost which the Nginx server forwards traffic to using a reverse proxy system. Docker is another piece of software that is used for this part of the system, this is due to the hardware it's running on being used for multiple other systems as it is my own personal home server so this keeps it isolated from the rest of the system. As mentioned above MongoDB was used for the database software, I chose this as it is fast and reliable and i've used it before on previous projects with amazing results, so it was an easy choice for me when deciding on a database software to use.
@@ -54,6 +176,45 @@ For this I decided to use the built-in Wi-Fi of the Raspberry Pi 3 (RPi) as it h
 
 \subsection{Setup API}
 The setup API is just a REST API in the same way that the core server is, however it only works on the IP of the Wi-Fi hotspot (192.168.4.1). This IP would be the same on every device so that the users phone knows what IP to use in order to access the setup API. The API has two endpoints, one which accepts the Wi-Fi details so it can connect to your home Wi-Fi and returns the UUID of the device, and another which tells you the status of the setup, either waiting, testing, failed, or completed. Once the status endpoint is called and returns completed, it waits 5 seconds and then shuts down the hotspot as the device is now successfully setup. The details endpoint however is a lot more complex, as after it has received the details from the user it does a lot of tasks in order to connect to the Wi-Fi network provided, check that it connects successfully, generate a new UUID for itself, send that to the central server to register the device and then respond to the users device with the new UUID it generated. The main issue I came up against with this system was having the Wi-Fi devices switch between hotspot mode and connecting to the access point automatically, as it would kick the users device off of the hotspot and cause issues. Instead of this I decided to add a second Wi-Fi adapter to the device via USB as it eased the complexity of this section slightly and reduced the likelihood of issues arising down the line.
+\\
+\indent In Figure 5.6 you can see how the Wi-Fi details are sent across to the smart lock core in order for it to connect to the Wi-Fi and perform it's own setup and registration. Once this is all done it responds with the UUID that it generated during this phase so that the user can later add the device to their account when connected to the central server. As for Figure 5.7, this is used in company with the first setup details request, being constantly polled by the device that sent the details in order to figure out when the setup is complete or if something goes wrong. I included two possible responses in the figure below, however the device could also respond with waiting and failed status depending on what stage the setup is in.
+
+\begin{figure}[H]
+	\caption{Setup Details Request and Response Example}
+	\begin{Verbatim}[frame=single]
+POST /api/v1/setup/details HTTP/1.1
+Host: 192.168.4.1
+Content-Type: application/json
+Request Body:
+{
+	"wifissid": "TestNetworkAP",
+	"wifipassword": "password123454321"
+}
+Response Body:
+{
+	"uuid": "656230df-376a-4996-9f32-0eddc4683e46"
+}
+	\end{Verbatim}
+\end{figure}
+
+\begin{figure}[H]
+	\caption{Setup Status Request and Response Example}
+	\begin{Verbatim}[frame=single]
+GET /api/v1/setup/status HTTP/1.1
+Host: 192.168.4.1
+Content-Type: application/json
+Response Body #1:
+{
+	"status": "testing",
+	"details": "Testing the provided credentials to ensure validity."
+}
+Response Body #2:
+{
+	"status": "completed",
+	"details": "The provided details were correct and the device is..."
+}
+	\end{Verbatim}
+\end{figure}
 
 \subsection{Core to Central Server Communication}
 The core is constantly polling the server for any commands that it may receive. Originally I was planning to have a constantly open connection in the form of a websocket, however this uses more resources constantly on the server side and is less secure if somehow the TLS encryption of one session was cracked by an attacker. With new sessions, new nonces and encryption keys are generated and so even with the information from the last session, this new sessions security would not be lessened by the fact that the last session was decrypted. That said, the chances of a session getting decrypted are essentially impossible with current technology, so this is being overly secure if anything.
